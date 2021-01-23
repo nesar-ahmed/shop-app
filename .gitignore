@@ -1,6 +1,10 @@
 /node_modules
 /build
 
+dev.js
+
+package-lock.json
+
 .DS_Store
 
 npm-debug.log*

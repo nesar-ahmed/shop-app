@@ -1,22 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 
 const app = express();
 
+const users = require('./routes/api/users');
+const mongoUri = require('./config/keys').mongoUri
 
-// The url of mongodb database
-const url = 'mongodb://localhost:27017/shop-app';
+
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 
 // Connect to our app with mongodb
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then(() => console.log())
+mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(() => console.log('Mongodb connected'))
     .catch(err => console.log(err));
 
 
-app.get('/', (req, res) => {
-    res.send('Hello from express');
-});
+app.use('/api/users', users);
 
 
 const PORT = process.env.PORT || 5000;
